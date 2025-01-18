@@ -1,9 +1,9 @@
 def main():
     with open("books/frankenstein.txt") as f:
         file_content = f.read()
-    print(file_content)
     count_words(file_content)
-    count_chars(file_content)
+    for_report = count_chars(file_content)
+    create_report(for_report)
 
 def count_words(txt):
     words = txt.split()
@@ -22,7 +22,21 @@ def count_chars(txt):
         else:
             chars[char] += 1
 
-     print(chars)
+     return chars
 
+def sort_on(dict):
+    return dict["count"]
+
+def create_report(dict):
+    list_dict = []
+    for i in dict:
+        list_dict.append({"char": i, "count": dict[i]})
+    
+    list_dict.sort(reverse=True, key=sort_on)
+    print("--- Begin report of books/frankenstein.txt ---")
+    for i in list_dict:
+        if i["char"].isalpha():
+            print(f"The '{i["char"]}' character was found {i["count"]} times")
+    print("--- End report ---")
 
 main()
